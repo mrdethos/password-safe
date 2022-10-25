@@ -6,31 +6,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <title>Password Safe</title>
     <style>
         body {
             background-color: #000;
         }
+
         h1 {
             color: #FFF;
+            font-size: 80px;
         }
-        h2, h3, h4 {
+
+        h2 {
+            color: #FFF;
+            font-weight: lighter;
+        }
+
+        h3,
+        h4 {
             color: #FFF;
         }
+
         a {
             color: #FFF;
             text-decoration: none;
         }
     </style>
 </head>
+
 <body>
-    <h1>Password Safe</h1>
-    <h3>A place to safely store your passwords</h3>
-    <h4><a href="{% url 'login' %}">Log in</a></h4>
-    <h4><a href="{% url 'signup' %}">Sign Up</a></h4>
-
-
+    <div class="d-flex align-items-center justify-content-center flex-column" style="height: 900px;">
+        <h1 class=" text-center">Password Safe</h1>
+        <h2 class="d-flex p-2">A place to safely store your passwords</h2>
+        <div class="d-flex justify-content-between" style="width: 11%; margin: 15px">
+            <h4><a href="{% url 'login' %}">Log in</a></h4>
+            <h4><a href="{% url 'signup' %}">Sign Up</a></h4>
+        </div>
+    </div>
 </body>
 
 </html>
