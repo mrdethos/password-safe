@@ -38,15 +38,20 @@
 <body>
 
     {% if user.is_authenticated %}
-    <p class="nav-link" href="#" style="color: #FFF; font-size:30px;" >Welcome, {{user.username}}</p>
+    <h2 style="color: #FFF; font-size:20px;" >Logged in as <b>{{user.username}}</b></h2>
     <a class="nav-link" href="/logout" style="color: #FFF;">Logout</a>
 
+    <div class="d-flex align-items-center justify-content-center flex-column" style="margin-top: 30px;">
+        <h2>Your passwords</h2>
+    </div>
 
+    {% for i in base_storedpassword %}
+    <p style="color: #FFF">a</p>
+    {% endfor %}
 
 
 
     {% else %}
-
     <div class="d-flex align-items-center justify-content-center flex-column" style="height: 800px;">
         <h1 class=" text-center">Password Safe</h1>
         <h2 class="d-flex p-2">A place to safely store your passwords</h2>
