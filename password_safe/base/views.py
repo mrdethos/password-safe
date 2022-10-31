@@ -5,6 +5,10 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 
+from django.views.generic.list import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import StoredPassword
+
 
 def home(request):
     return render(request, 'base/home.html')
@@ -22,7 +26,7 @@ def register_request(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Registration successful.")
-            return redirect("loginpage")
+            return redirect("home")
         messages.error(request, "Unsuccessful registration. Invalid information.")
     form = NewUserForm()
     return render(request=request, template_name="base/signup.html", context={"register_form":form})
@@ -49,3 +53,25 @@ def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect("home")
+
+def password_list(request):
+    password = StoredPassword.objects.all()
+    context = {'passwords': password}
+    return render(request, 'base/password_list.html', context)
+
+
+'''class PasswordList(LoginRequiredMixin, ListView):
+    model               = StoredPassword
+    context_object_name = 'passwords'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['passwords'] = context['passwords'].filter(user=self.request.user)
+        context['count'] = context['passwords'].count()
+
+        search_input = self.request.GET.get('search-area') or ''
+        if search_input:
+            context['passwords'] = context['passwords'].filter(title__startswith=search_input)
+        context['search_input'] = search_input
+        return context
+'''

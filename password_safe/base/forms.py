@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 
 class NewUserForm(UserCreationForm):
     username    = forms.CharField(
-        label='', 
+        label='',
+        max_length=50,
         widget=forms.TextInput(attrs={"class": "form-control mb-3", 'placeholder': 'Your Name'})
         )
     email       = forms.EmailField(
@@ -15,11 +16,13 @@ class NewUserForm(UserCreationForm):
         widget=forms.EmailInput(attrs={"class":"form-control  mb-3",'placeholder': 'user@email.com'})
         )
     password1   = forms.CharField(
-        label='', 
+        label='',
+        max_length=50,
         widget=forms.PasswordInput(attrs={"class":"form-control mb-3", 'placeholder': 'Your password'})
         )
     password2   = forms.CharField(
         label='',
+        max_length=50,
         widget=forms.PasswordInput(attrs={"class":"form-control mb-3", 'placeholder': 'Password confirmation'})
         )
     class Meta:
@@ -27,12 +30,11 @@ class NewUserForm(UserCreationForm):
         fields = ("username", "email", "password1", "password2")
         
     def save(self, commit=True):
-        user = super(NewUserForm, self).save(commit=True)
+        user = super(NewUserForm, self).save(commit=False)
         user.username = self.cleaned_data['username']
         user.email = self.cleaned_data['email']
         user.password1 = self.cleaned_data['password1']
         user.password2 = self.cleaned_data['password2']
-
         
         if commit:
             user.save()
