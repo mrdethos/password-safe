@@ -59,19 +59,3 @@ def password_list(request):
     context = {'passwords': password}
     return render(request, 'base/password_list.html', context)
 
-
-'''class PasswordList(LoginRequiredMixin, ListView):
-    model               = StoredPassword
-    context_object_name = 'passwords'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['passwords'] = context['passwords'].filter(user=self.request.user)
-        context['count'] = context['passwords'].count()
-
-        search_input = self.request.GET.get('search-area') or ''
-        if search_input:
-            context['passwords'] = context['passwords'].filter(title__startswith=search_input)
-        context['search_input'] = search_input
-        return context
-'''

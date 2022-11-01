@@ -32,22 +32,61 @@
             color: #FFF;
             text-decoration: none;
         }
+
+        .lock {
+            box-sizing: border-box;
+            position: relative;
+            display: block;
+            transform: scale(var(--ggs,1));
+            width: 12px;
+            height: 11px;
+            border: 2px solid;
+            border-top-right-radius: 50%;
+            border-top-left-radius: 50%;
+            border-bottom: transparent;
+            margin-top: -12px
+        }
+
+        .lock::after {
+            content: "";
+            display: block;
+            box-sizing: border-box;
+            position: absolute;
+            width: 16px;
+            height: 10px;
+            border-radius: 2px;
+            border: 2px solid transparent;
+            box-shadow: 0 0 0 2px;
+            left: -4px;
+            top: 9px
+        }
+
+        #add-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 42px;
+            text-shadow: 1px 1px #1f1f1f;
+        }
+
+
     </style>
 </head>
 
 <body>
 
+
     {% if user.is_authenticated %}
     <h2 style="color: #FFF; font-size:20px;" >Logged in as <b>{{user.username}}</b></h2>
-    <a class="nav-link" href="/logout" style="color: #FFF;">Logout</a>
+    <a class="text-white" href="/logout">Logout</a>
 
     <div class="d-flex align-items-center justify-content-center flex-column" style="margin-top: 30px;">
-        <h2>Your passwords</h2>
+        
     </div>
-
-    {{ passwords.description }}
-
-
+    
+    {% block content %}
+        <a href="/password_list">View your passwords</a>
+    {% endblock content %}
+    
 
     {% else %}
     <div class="d-flex align-items-center justify-content-center flex-column" style="height: 800px;">
@@ -59,6 +98,8 @@
         </div>
     </div>
     {% endif %}
+
+
 
 </body>
 
