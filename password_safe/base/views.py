@@ -1,11 +1,11 @@
 from re import template
 from django.shortcuts import render, redirect
 from .forms import NewUserForm
+from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
-
-from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import StoredPassword
 
@@ -59,3 +59,16 @@ def password_list(request):
     context = {'passwords': password}
     return render(request, 'base/password_list.html', context)
 
+class PasswordCreate(LoginRequiredMixin, CreateView):
+    model  = StoredPassword
+    fields = ['title', 'description', 'password']
+    success_url = reverse_lazy('password_list')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(PasswordCreate, self).form_valid(form)
+
+class PasswordDelete(LoginRequiredMixin, DeleteView):
+    model = StoredPassword
+    context_object_name = 'password'
+    success_url = reverse_lazy('password_list')

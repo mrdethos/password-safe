@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from base import views
+from base.views import PasswordCreate
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -9,4 +10,5 @@ urlpatterns = [
     path('signup/', views.register_request, name='signup'),
     path('logout/', views.logout_request, name='logout'),
     path('password_list/', views.password_list, name='password_list'),
+    path('password-create/', PasswordCreate.as_view(), name='password-create'),
 ]
