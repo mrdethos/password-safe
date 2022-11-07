@@ -17,22 +17,18 @@
             color: #FFF;
             font-size: 80px;
         }
-
         h2 {
             color: #FFF;
             font-weight: lighter;
         }
-
         h3,
         h4 {
             color: #FFF;
         }
-
         a {
             color: #FFF;
             text-decoration: none;
         }
-
         .lock {
             box-sizing: border-box;
             position: relative;
@@ -46,7 +42,6 @@
             border-bottom: transparent;
             margin-top: -12px
         }
-
         .lock::after {
             content: "";
             display: block;
@@ -60,7 +55,6 @@
             left: -4px;
             top: 9px
         }
-
         .delete-link {
             text-decoration: none;
             font-weight: 900;
@@ -68,14 +62,12 @@
             font-size: 22px;
             line-height: 0;
         }
-
         #add-link {
             color: #FFF;
             text-decoration: none;
             font-size: 42px;
             text-shadow: 1px 1px #1f1f1f;
         }
-
         input[type=text],
         input[type=password],
         textarea {
@@ -84,40 +76,27 @@
             padding: 10px;
             width: 100%;
         }
-
-
     </style>
 </head>
 
 <body>
-
-
     {% if user.is_authenticated %}
-    <h2 style="color: #FFF; font-size:20px;" >Logged in as <b>{{user.username}}</b></h2>
-    <a class="text-white" href="/logout">Logout</a>
-
-    <div class="d-flex align-items-center justify-content-center flex-column" style="margin-top: 30px;">
-        
-    </div>
-    
-    {% block content %}
-        <a href="/password_list">View your passwords</a>
-    {% endblock content %}
-    
-
-    {% else %}
-    <div class="d-flex align-items-center justify-content-center flex-column" style="height: 800px;">
-        <h1 class=" text-center">Password Safe</h1>
-        <h2 class="d-flex p-2">A place to safely store your passwords</h2>
-        <div class="d-flex justify-content-around" style="width: 15%; margin: 15px">
-            <h4 style="margin-right: 5px"><a href="{% url 'loginpage' %}">Log in</a></h4>
-            <h4><a href="{% url 'signup' %}">Sign Up</a></h4>
+        <h2 style="color: #FFF; font-size:20px;" >Logged in as <b>{{user.username}}</b></h2>
+        <a class="text-white" href="/logout">Logout</a>
+        <div class="d-flex align-items-center justify-content-center flex-column" style="margin-top: 30px;">
         </div>
-    </div>
+        {% block content %}
+            <a href="/password_list">View your passwords</a>
+        {% endblock content %}
+    {% else %}
+        <div class="d-flex align-items-center justify-content-center flex-column" style="height: 800px;">
+            <h1 class=" text-center">Password Safe</h1>
+            <h2 class="d-flex p-2">A place to safely store your passwords</h2>
+            <div class="d-flex justify-content-around" style="width: 15%; margin: 15px">
+                <h4 style="margin-right: 5px"><a href="{% url 'loginpage' %}">Log in</a></h4>
+                <h4><a href="{% url 'signup' %}">Sign Up</a></h4>
+            </div>
+        </div>
     {% endif %}
-
-
-
 </body>
-
 </html>

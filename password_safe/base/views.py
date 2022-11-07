@@ -1,16 +1,17 @@
-from re import template
 from django.shortcuts import render, redirect
 from .forms import NewUserForm
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import StoredPassword
 
 
 def home(request):
+    if request.user.is_authenticated:
+        return redirect('password_list/')
     return render(request, 'base/home.html')
 
 def loginpage(request):
@@ -20,6 +21,8 @@ def signup(request):
     return render(request, 'base/signup.html')
 
 def register_request(request):
+    if request.user.is_authenticated:
+        return redirect('../password_list/')
     if request.method == "POST":
         form = NewUserForm(request.POST)
         if form.is_valid():
@@ -32,6 +35,8 @@ def register_request(request):
     return render(request=request, template_name="base/signup.html", context={"register_form":form})
 
 def login_request(request):
+    if request.user.is_authenticated:
+        return redirect('../password_list/')
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -55,7 +60,7 @@ def logout_request(request):
     return redirect("home")
 
 def password_list(request):
-    password = StoredPassword.objects.all()
+    password = StoredPassword.objects.filter(user=request.user)
     context = {'passwords': password}
     return render(request, 'base/password_list.html', context)
 
@@ -67,6 +72,11 @@ class PasswordCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(PasswordCreate, self).form_valid(form)
+
+class PasswordUpdate(LoginRequiredMixin, UpdateView):
+    model = StoredPassword
+    fields = ['title', 'description', 'password']
+    success_url = reverse_lazy('password_list')
 
 class PasswordDelete(LoginRequiredMixin, DeleteView):
     model = StoredPassword
